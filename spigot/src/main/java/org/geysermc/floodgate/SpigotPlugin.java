@@ -30,6 +30,7 @@ import com.google.inject.Injector;
 import com.google.inject.Injector;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.geysermc.floodgate.api.logger.FloodgateLogger;
+import org.geysermc.floodgate.module.PaperListenerModule;
 import org.geysermc.floodgate.module.PluginMessageModule;
 import org.geysermc.floodgate.module.ServerCommonModule;
 import org.geysermc.floodgate.module.SpigotAddonModule;
@@ -61,11 +62,14 @@ public final class SpigotPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        boolean usePaperListener = ReflectionUtils.getClassSilently(
+                "com.destroystokyo.paper.event.profile.PreFillProfileEvent") != null;
+
         platform.enable(
                 new SpigotCommandModule(this),
                 new SpigotAddonModule(),
                 new PluginMessageModule(),
-                new SpigotListenerModule()
+                (usePaperListener ? new PaperListenerModule() : new SpigotListenerModule())
         );
 
 
