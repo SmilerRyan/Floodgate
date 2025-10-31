@@ -104,9 +104,6 @@ public class FormChannel implements PluginMessageChannel {
 
     public byte[] createFormData(Form form) {
         short formId = getNextFormId();
-        if (config.isProxy()) {
-            formId |= 0x8000;
-        }
         storedForms.put(formId, form);
 
         FormDefinition<Form, ?, ?> definition = formDefinitions.definitionFor(form);

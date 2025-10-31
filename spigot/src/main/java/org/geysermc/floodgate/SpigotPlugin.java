@@ -27,9 +27,8 @@ package org.geysermc.floodgate;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import org.bukkit.Bukkit;
+import com.google.inject.Injector;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.geysermc.floodgate.api.handshake.HandshakeHandlers;
 import org.geysermc.floodgate.api.logger.FloodgateLogger;
 import org.geysermc.floodgate.module.PaperListenerModule;
 import org.geysermc.floodgate.module.PluginMessageModule;
@@ -39,7 +38,6 @@ import org.geysermc.floodgate.module.SpigotCommandModule;
 import org.geysermc.floodgate.module.SpigotListenerModule;
 import org.geysermc.floodgate.module.SpigotPlatformModule;
 import org.geysermc.floodgate.util.ReflectionUtils;
-import org.geysermc.floodgate.util.SpigotHandshakeHandler;
 import org.geysermc.floodgate.util.SpigotProtocolSupportHandler;
 import org.geysermc.floodgate.util.SpigotProtocolSupportListener;
 
@@ -74,8 +72,6 @@ public final class SpigotPlugin extends JavaPlugin {
                 (usePaperListener ? new PaperListenerModule() : new SpigotListenerModule())
         );
 
-        injector.getInstance(HandshakeHandlers.class)
-                .addHandshakeHandler(injector.getInstance(SpigotHandshakeHandler.class));
 
         // add ProtocolSupport support (hack)
         if (getServer().getPluginManager().getPlugin("ProtocolSupport") != null) {

@@ -59,7 +59,6 @@ import org.geysermc.floodgate.crypto.AesCipher;
 import org.geysermc.floodgate.crypto.AesKeyProducer;
 import org.geysermc.floodgate.crypto.Base64Topping;
 import org.geysermc.floodgate.crypto.FloodgateCipher;
-import org.geysermc.floodgate.crypto.KeyProducer;
 import org.geysermc.floodgate.event.EventBus;
 import org.geysermc.floodgate.event.lifecycle.ShutdownEvent;
 import org.geysermc.floodgate.event.util.ListenerAnnotationMatcher;
@@ -139,12 +138,6 @@ public class CommonModule extends AbstractModule {
 
     @Provides
     @Singleton
-    public KeyProducer keyProducer() {
-        return new AesKeyProducer();
-    }
-
-    @Provides
-    @Singleton
     public FloodgateCipher cipher() {
         return new AesCipher(new Base64Topping());
     }
@@ -160,9 +153,8 @@ public class CommonModule extends AbstractModule {
     @Singleton
     public ConfigLoader configLoader(
             @Named("configClass") Class<? extends FloodgateConfig> configClass,
-            KeyProducer producer,
             FloodgateCipher cipher) {
-        return new ConfigLoader(dataDirectory, configClass, producer, cipher, reader);
+        return new ConfigLoader(dataDirectory, configClass, cipher, reader);
     }
 
     @Provides

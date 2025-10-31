@@ -36,7 +36,6 @@ import org.geysermc.configutils.file.codec.PathFileCodec;
 import org.geysermc.configutils.file.template.TemplateReader;
 import org.geysermc.configutils.updater.change.Changes;
 import org.geysermc.floodgate.crypto.FloodgateCipher;
-import org.geysermc.floodgate.crypto.KeyProducer;
 
 @Getter
 @RequiredArgsConstructor
@@ -44,7 +43,6 @@ public final class ConfigLoader {
     private final Path dataDirectory;
     private final Class<? extends FloodgateConfig> configClass;
 
-    private final KeyProducer keyProducer;
     private final FloodgateCipher cipher;
     private final TemplateReader reader;
 
@@ -85,29 +83,6 @@ public final class ConfigLoader {
                     "Failed to load the config! Try to delete the config file if this error persists",
                     throwable
             );
-        }
-    }
-
-    public void generateKey(Path keyPath) {
-        try {
-            Key key = keyProducer.produce();
-            cipher.init(key);
-
-            String test = "abcdefghijklmnopqrstuvwxyz0123456789";
-            byte[] encrypted = cipher.encryptFromString(test);
-            String decrypted = cipher.decryptToString(encrypted);
-
-            if (!test.equals(decrypted)) {
-                throw new RuntimeException("Failed to decrypt test message.\n" +
-                        "Original message: " + test + "." +
-                        "Decrypted message: " + decrypted + ".\n" +
-                        "The encrypted message itself: " + new String(encrypted)
-                );
-            }
-
-            Files.write(keyPath, key.getEncoded());
-        } catch (Exception exception) {
-            throw new RuntimeException("Error while creating key", exception);
         }
     }
 }

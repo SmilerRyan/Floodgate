@@ -1,8 +1,3 @@
-# In Floodgate bedrock player data is send encrypted
-# The following value should point to the key Floodgate generated.
-# The public key should be used for the Geyser(s) and the private key for the Floodgate(s)
-key-file-name: key.pem
-
 # Floodgate prepends a prefix to bedrock usernames to avoid conflicts
 # However, certain conflicts can cause issues with some plugins so this prefix is configurable using the property below
 # It is recommended to use a prefix that does not contain alphanumerical to avoid the possibility of duplicate usernames.
@@ -64,3 +59,10 @@ metrics:
 
 # Do not change this
 config-version: 3
+
+ip-whitelist:
+  # Enable the IP whitelist
+  enabled: false
+  # The list of IPs to whitelist
+  ips:
+    - "127.0.0.1"

@@ -90,7 +90,4 @@ public class FloodgatePlatform {
         }
     }
 
-    public boolean isProxy() {
-        return config.isProxy();
-    }
 }

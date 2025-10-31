@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.Key;
+import java.util.Collections;
+import java.util.List;
 import lombok.Getter;
 import org.geysermc.configutils.loader.callback.CallbackResult;
 import org.geysermc.configutils.loader.callback.GenericPostInitializeCallback;
@@ -38,8 +40,7 @@ import org.geysermc.configutils.loader.callback.GenericPostInitializeCallback;
  * addition to the global configuration like {@link ProxyFloodgateConfig} for the proxies.
  */
 @Getter
-public class FloodgateConfig implements GenericPostInitializeCallback<ConfigLoader> {
-    private String keyFileName;
+public class FloodgateConfig {
     private String usernamePrefix = "";
     private boolean replaceSpaces;
 
@@ -52,40 +53,8 @@ public class FloodgateConfig implements GenericPostInitializeCallback<ConfigLoad
     private boolean debug;
     private int configVersion;
 
-
-    private Key key;
-    private String rawUsernamePrefix;
-
-    public boolean isProxy() {
-        return this instanceof ProxyFloodgateConfig;
-    }
-
-    @Override
-    public CallbackResult postInitialize(ConfigLoader loader) {
-        Path keyPath = loader.getDataDirectory().resolve(getKeyFileName());
-
-        // don't assume that the key always exists with the existence of a config
-        if (!Files.exists(keyPath)) {
-            loader.generateKey(keyPath);
-        }
-
-        try {
-            Key floodgateKey = loader.getKeyProducer().produceFrom(keyPath);
-            loader.getCipher().init(floodgateKey);
-            key = floodgateKey;
-        } catch (IOException exception) {
-            return CallbackResult.failed(exception.getMessage());
-        }
-
-        rawUsernamePrefix = usernamePrefix;
-
-        // Java usernames can't be longer than 16 chars
-        if (usernamePrefix.length() >= 16) {
-            usernamePrefix = ".";
-        }
-
-        return CallbackResult.ok();
-    }
+    @Getter private boolean ipWhitelist;
+    @Getter private List<String> ipWhitelistIps = Collections.singletonList("127.0.0.1");
 
     @Getter
     public static class DisconnectMessages {
