@@ -53,8 +53,7 @@ public class FloodgateConfig {
     private boolean debug;
     private int configVersion;
 
-    @Getter private boolean ipWhitelist;
-    @Getter private List<String> ipWhitelistIps = Collections.singletonList("127.0.0.1");
+    private IpWhitelistConfig ipWhitelist;
 
     @Getter
     public static class DisconnectMessages {

@@ -121,13 +121,4 @@ public final class SpigotCommandUtil extends CommandUtil {
         }
     }
 
-    @Override
-    public boolean whitelistPlayer(UUID uuid, String username) {
-        return WhitelistUtils.addPlayer(uuid, username, versionSpecificMethods);
-    }
-
-    @Override
-    public boolean removePlayerFromWhitelist(UUID uuid, String username) {
-        return WhitelistUtils.removePlayer(uuid, username, versionSpecificMethods);
-    }
 }

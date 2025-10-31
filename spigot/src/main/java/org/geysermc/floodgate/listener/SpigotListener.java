@@ -35,12 +35,18 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.geysermc.floodgate.api.SimpleFloodgateApi;
 import org.geysermc.floodgate.api.logger.FloodgateLogger;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
+import java.util.List;
+import java.util.List;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.geysermc.floodgate.config.FloodgateConfig;
 import org.geysermc.floodgate.util.LanguageManager;
 
 public final class SpigotListener implements Listener {
     @Inject private SimpleFloodgateApi api;
     @Inject private LanguageManager languageManager;
     @Inject private FloodgateLogger logger;
+    @Inject private FloodgateConfig config;
+
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent event) {
