@@ -62,7 +62,7 @@ config-version: 3
 
 ip-whitelist:
   # Enable the IP whitelist
-  enabled: false
+  enabled: true
   # The list of IPs to whitelist
   ips:
     - "127.0.0.1"

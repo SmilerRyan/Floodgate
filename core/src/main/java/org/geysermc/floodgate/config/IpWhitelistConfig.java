@@ -6,6 +6,6 @@ import lombok.Getter;
 
 @Getter
 public class IpWhitelistConfig {
-    private boolean enabled;
+    private boolean enabled = true;
     private List<String> ips = Collections.singletonList("127.0.0.1");
 }
